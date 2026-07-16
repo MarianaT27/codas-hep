@@ -59,18 +59,18 @@ if (err3 != cudaSuccess)                           // `cudaSuccess` is provided 
       printf("Error: %s\n", cudaGetErrorString(err3)); // `cudaGetErrorString` is provided by CUDA.
 
 
-
+cudaError_t err;
   initWith(3, a, N);
   initWith(4, b, N);
   initWith(0, c, N);
 
-    cudaError_t err;
+    
+
+  addVectorsInto<<<1024,128>>>(c, a, b, N);
     err = cudaGetLastError(); // `cudaGetLastError` will return the error from above.
     if (err != cudaSuccess)
         printf("Error: %s\n", cudaGetErrorString(err));
 
-
-  addVectorsInto<<<1024,32>>>(c, a, b, N);
     cudaDeviceSynchronize();
 
   checkElementsAre(7, c, N);
